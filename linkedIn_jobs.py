@@ -26,9 +26,9 @@ for i in range(1,10):
             writer =csv.writer(file)
         #  writer.writerow(["title","company","location","apply_link"])
             for card in job_cards:
-                title_elem = card.find("h3", class_="base-search-card__title").text.strip()
-                company_elem = card.find("h4", class_="base-search-card__subtitle").text.strip()
-                location_elem = card.find("span", class_="job-search-card__location").text.strip()
+                title_elem = card.find("h3", class_="base-search-card__title").text.strip() # type: ignore
+                company_elem = card.find("h4", class_="base-search-card__subtitle").text.strip() # type: ignore
+                location_elem = card.find("span", class_="job-search-card__location").text.strip() # type: ignore
                 link= card.find("a", class_="base-card__full-link", href=True)
                 link_elem =link["href"] if link else None
                 writer.writerow([title_elem,company_elem,location_elem,link_elem])
@@ -36,6 +36,8 @@ for i in range(1,10):
 
         return jobs
 
-if __name__ == "__main__":
-    fetch_jobs_from_linkedin("python", "UAE", max_results=700)
+
+location = input("Enter the location: ")
+job_role = input("Enter the job role you want to search: ")
+fetch_jobs_from_linkedin(job_role, location, max_results=700)
     
