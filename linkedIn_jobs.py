@@ -45,4 +45,4 @@ def fetch_jobs_from_linkedin(query: str, location: str, max_results=100):
 location =input("Enter the location: ")
 job_role =input("Enter the job role you want to search: ")
 fetch_jobs_from_linkedin(job_role, location, max_results=100)
-    
+print("Job data has been written to linked.csv")    
