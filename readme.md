@@ -36,7 +36,7 @@ HOW TO RUN
 
 USAGE EXAMPLE
 python linkedin_job_scraper.py
-Enter the location(country name): United States
+Enter the location(country name): India
 Enter the job role you want to search: Data Scientist
 Job data has been written to linked.csv
 
