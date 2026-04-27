@@ -9,22 +9,36 @@ FEATURES
 - Saves data into linked.csv
 - Simple function call based on user input
 
+INSTALLATION
+1. Clone or download this project
+2. Navigate to the project directory:
+   cd scrapers
+3. Install dependencies:
+   pip install -r requirement.txt
+4. Install Playwright browsers:
+   playwright install
+
 REQUIREMENTS
 Install dependencies:
-pip install playwright
-pip install beautifulsoup4
-pip install lxml
+pip install -r requirement.txt
 
 Install Playwright browsers:
 playwright install
 
 HOW TO RUN
-Run the script:
-python linkedIn_jobs.py
+1. Run the script:
+   python linkedin_job_scraper.py
+2. The script will prompt you for input:
+   Enter the location (country name): [type location, e.g., "India"]
+   Enter the job role you want to search: [type role, e.g., "Python Developer"]
+3. Wait for the script to complete (takes 5-10 seconds)
+4. Check the output file "linked.csv" for results
 
-The script will ask:
-Enter the location:
-Enter the job role you want to search:
+USAGE EXAMPLE
+python linkedin_job_scraper.py
+Enter the location(country name): United States
+Enter the job role you want to search: Data Scientist
+Job data has been written to linked.csv
 
 OUTPUT
 All extracted job data is appended to "linked.csv".
@@ -45,9 +59,7 @@ NOTES
 - Only the first page of results is scraped.
 - CSV file is appended on every run.
 
-FUTURE ENHANCEMENTS
-- Add scrolling to load more jobs
-- Add pagination
-- Add user-agent spoofing
-- Store data in a database
-- Add proxy support
+AUTHORS
+- Saif
+- Zawberus
+
