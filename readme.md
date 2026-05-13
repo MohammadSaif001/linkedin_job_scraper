@@ -1,65 +1,171 @@
-LinkedIn Job Scraper (Playwright + BeautifulSoup)
+# LinkedIn Job Scraper (v2.0)
 
-This project extracts job listings from LinkedIn using Playwright to load dynamic content and BeautifulSoup to parse the rendered HTML. The script collects job titles, companies, locations, and application links, then stores them in a CSV file.
+Extract job listings from LinkedIn using Playwright and BeautifulSoup. This project provides multiple scraper implementations to collect job titles, companies, locations, and application links.
 
-FEATURES
-- Automates browser using Playwright (Chromium)
-- Loads full JavaScript-rendered job listings
-- Scrapes job title, company, job location, and apply link
-- Saves data into linked.csv
-- Simple function call based on user input
+## 📋 Project Structure
 
-INSTALLATION
+```
+linkedin-job-scrapers/
+├── scrapers/
+│   ├── linkedin_job_scraper.py       # Original scraper (interactive)
+│   ├── linkedin_job_fetcher.py       # Enhanced scraper (recommended)
+│   └── scraper_web.py                # Web scraper (legacy)
+├── output/
+│   ├── linked_job.csv
+│   └── linked_job.json
+├── requirement.txt
+└── README.md
+```
+
+## ✨ Features
+
+- **Multiple Scrapers**: Choose between interactive or programmatic scrapers
+- **Playwright Integration**: Handles JavaScript-rendered job listings
+- **Multiple Formats**: Export to CSV or JSON
+- **Deduplication**: Prevents duplicate job listings
+- **Flexible Output**: Save to custom file paths
+- **Pagination Support**: Scrape multiple pages of results
+- **Job Descriptions**: Extract detailed job descriptions (enhanced version)
+
+## 📦 INSTALLATION
+
 1. Clone or download this project
 2. Navigate to the project directory:
-   cd scrapers
+   ```
+   cd linkedin-job-scrapers
+   ```
 3. Install dependencies:
+   ```
    pip install -r requirement.txt
+   ```
 4. Install Playwright browsers:
+   ```
    playwright install
+   ```
 
-REQUIREMENTS
-Install dependencies:
+## 🔧 REQUIREMENTS
+
+```
 pip install -r requirement.txt
-
-Install Playwright browsers:
 playwright install
+```
 
-HOW TO RUN
-1. Run the script:
-   python linkedin_job_scraper.py
-2. The script will prompt you for input:
-   Enter the location (country name): [type location, e.g., "India"]
-   Enter the job role you want to search: [type role, e.g., "Python Developer"]
-3. Wait for the script to complete (takes 5-10 seconds)
-4. Check the output file "linked.csv" for results
+## 🚀 HOW TO RUN
 
-USAGE EXAMPLE
-python linkedin_job_scraper.py
-Enter the location(country name): India
+### Option 1: Interactive Mode (linkedin_job_scraper.py)
+```bash
+python scrapers/linkedin_job_scraper.py
+```
+Then follow the prompts:
+```
+Enter the location (country name): United States
 Enter the job role you want to search: Data Scientist
-Job data has been written to linked.csv
+```
 
-OUTPUT
-All extracted job data is appended to "linked.csv".
+### Option 2: CLI Mode with Arguments (linkedin_job_fetcher.py - RECOMMENDED)
+```bash
+python scrapers/linkedin_job_fetcher.py \
+  --query "Python Developer" \
+  --location "India" \
+  --output "output/jobs.csv" \
+  --max-results 100
+```
 
-COLUMNS:
-title | company | location | apply_link
+### Option 3: Programmatic Usage
+```python
+from scrapers.linkedin_job_fetcher import scrape_linkedin_jobs
 
-HOW IT WORKS
-1. Playwright opens a headless Chromium browser.
-2. Loads the LinkedIn jobs search URL.
-3. Waits for JavaScript to load completely.
-4. BeautifulSoup parses the HTML.
-5. The script extracts job fields from each job card.
-6. The CSV writer saves each row.
+jobs = scrape_linkedin_jobs(
+    query="Data Scientist",
+    location="United States",
+    output_path="output/results.json",
+    max_results=100,
+    headless=True
+)
+```
 
-NOTES
-- LinkedIn uses bot detection, scraping may fail sometimes.
-- Only the first page of results is scraped.
-- CSV file is appended on every run.
+## 📊 OUTPUT FORMATS
 
-AUTHORS
+### CSV Output
+```
+title,company,location,apply_link
+Senior Python Developer,Tech Corp,San Francisco,https://linkedin.com/jobs/view/...
+Data Scientist,Analytics Inc,New York,https://linkedin.com/jobs/view/...
+```
+
+### JSON Output
+```json
+[
+  {
+    "title": "Senior Python Developer",
+    "company": "Tech Corp",
+    "location": "San Francisco",
+    "apply_link": "https://linkedin.com/jobs/view/..."
+  }
+]
+```
+
+## 🔄 HOW IT WORKS
+
+1. Playwright launches a headless Chromium browser
+2. Navigates to LinkedIn job search URL with specified parameters
+3. Waits for JavaScript to load job listings
+4. Scrolls to load additional job cards
+5. BeautifulSoup parses the rendered HTML
+6. Extracts job fields from each job card
+7. Deduplicates results
+8. Exports to CSV or JSON
+
+## ⚙️ Available Options
+
+### linkedin_job_fetcher.py
+- `--query`: Job title or keywords (required if not prompted)
+- `--location`: Job location (required if not prompted)
+- `--output`: Output file path (default: linked_job.csv)
+- `--max-results`: Maximum number of jobs to scrape (default: 100)
+- `--visible`: Show browser window for debugging (default: headless)
+
+## ⚠️ NOTES
+
+- LinkedIn uses bot detection; scraping may fail occasionally
+- Respect LinkedIn's Terms of Service
+- Scraping takes 10-30 seconds depending on results count
+- Browser must load JavaScript - use `--visible` flag to debug
+- CSV file appends on every run; JSON file overwrites
+- For large result sets, increase timeout values
+
+## 🐛 TROUBLESHOOTING
+
+**No jobs found:**
+- Check network connection
+- Try with `--visible` flag to see what LinkedIn is showing
+- LinkedIn may require login - consider adding authentication
+
+**Slow performance:**
+- Reduce `--max-results` value
+- Increase `--timeout` if pages aren't loading
+
+**Import errors:**
+- Ensure `pip install -r requirement.txt` was completed
+- Ensure `playwright install` was completed
+
+## 📝 CHANGELOG
+
+### v2.0 (Current)
+- Reorganized scraper files into `scrapers/` folder
+- Added enhanced `linkedin_job_fetcher.py` with better error handling
+- Multiple output format support (CSV and JSON)
+- Improved deduplication logic
+- Better pagination handling
+
+### v1.0
+- Initial release with basic scraper
+
+## 👨‍💻 AUTHORS
+
 - Saif
-- Zawberus
+
+## 📄 LICENSE
+
+MIT License
 
